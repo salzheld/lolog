@@ -1,10 +1,13 @@
 package de.salzheld.login.model;
 
+import de.salzheld.login.Tools;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import javax.tools.Tool;
 
 /**
  * Created by Joern on 18.01.2016.
@@ -23,7 +26,7 @@ public class Student {
      * Default constructor.
      */
     public Student() {
-        this(null, null, null, null);
+        this("", "", null, null);
     }
 
     /**
@@ -42,7 +45,14 @@ public class Student {
         this.course = new SimpleStringProperty(course);
         this.password = new SimpleStringProperty(password);
         grade = new SimpleIntegerProperty(5);
-        login = null;
+        login = new SimpleStringProperty(null);
+    }
+
+    /**
+     * Erzeugt den LoNet²-Login
+     **/
+    public void buildLogin() {
+        login.set( Tools.sanitizeName(lastName.getValue()) + "-" + Tools.sanitizeName(firstName.getValue()) );
     }
 
     public String getFirstName() {

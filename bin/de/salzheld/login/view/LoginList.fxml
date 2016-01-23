@@ -19,7 +19,7 @@
                   <TableView fx:id="personTable" prefHeight="96.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="courseColumn" prefWidth="75.0" text="Klasse" />
-                      <TableColumn prefWidth="75.0" text="Login" />
+                      <TableColumn fx:id="loginColumn" prefWidth="75.0" text="Login" />
                         <TableColumn fx:id="passwordColumn" prefWidth="75.0" text="Passwort" />
                         <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
                     </columns>

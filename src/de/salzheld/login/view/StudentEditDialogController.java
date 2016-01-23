@@ -1,5 +1,6 @@
 package de.salzheld.login.view;
 
+import de.salzheld.login.Tools;
 import de.salzheld.login.model.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -78,6 +79,7 @@ public class StudentEditDialogController {
             else {
                 person.setPassword(passwordField.getText());
             }
+            person.buildLogin();
 
             okClicked = true;
             dialogStage.close();
