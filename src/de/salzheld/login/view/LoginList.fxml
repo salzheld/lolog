@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.salzheld.login.view.LoginListController">
    <children>
       <SplitPane dividerPositions="0.8389261744966443" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView prefHeight="96.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="personTable" prefHeight="96.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn prefWidth="75.0" text="Klasse" />
                       <TableColumn prefWidth="75.0" text="Login" />
-                        <TableColumn prefWidth="75.0" text="Passwort" />
-                        <TableColumn prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="Passwort" />
+                        <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Name" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -28,7 +30,8 @@
                <children>
                   <ButtonBar prefHeight="40.0" prefWidth="200.0" />
                   <Button layoutX="520.0" layoutY="10.0" mnemonicParsing="false" text="Drucken" />
-                <Button layoutX="447.0" layoutY="10.0" mnemonicParsing="false" text="Kopieren" />
+                <Button layoutX="391.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleNewPerson" text="Neu" />
+                  <Button layoutX="437.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteStudent" text="Löschen" />
                </children>
             </AnchorPane>
         </items>

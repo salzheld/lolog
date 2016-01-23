@@ -1,5 +1,7 @@
 package de.salzheld.login.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,7 +12,7 @@ public class Student {
     private final StringProperty firstName;
     private final StringProperty lastName;
     private final StringProperty course;
-    private final int grade;
+    private final IntegerProperty grade;
 
     private final StringProperty login;
     private final StringProperty password;
@@ -35,7 +37,7 @@ public class Student {
         this.lastName = new SimpleStringProperty(lastName);
         this.course = new SimpleStringProperty(course);
         this.password = new SimpleStringProperty(password);
-        grade = 5;
+        grade = new SimpleIntegerProperty(5);
         login = null;
     }
 
@@ -47,12 +49,32 @@ public class Student {
         this.firstName.set(firstName);
     }
 
+    public StringProperty firstNameProperty() {
+        return firstName;
+    }
+
     public String getLastName() {
         return lastName.get();
     }
 
     public void setLastName(String lastName) {
         this.lastName.set(lastName);
+    }
+
+    public StringProperty lastNameProperty() {
+        return lastName;
+    }
+
+    public int getGrade() {
+        return grade.get();
+    }
+
+    public void setGrade(int grade) {
+        this.grade.set(grade);
+    }
+
+    public IntegerProperty gradeProperty() {
+        return grade;
     }
 
     public String getCourse() {
@@ -63,6 +85,10 @@ public class Student {
         this.course.set(course);
     }
 
+    public StringProperty courseProperty() {
+        return course;
+    }
+
     public String getLogin() {
         return this.login.get();
     }
@@ -71,11 +97,19 @@ public class Student {
         this.login.set(login);
     }
 
+    public StringProperty loginProperty() {
+        return login;
+    }
+
     public String getPassword() {
         return password.get();
     }
 
     public void setPassword(String password) {
         this.password.set(password);
+    }
+
+    public StringProperty passwordProperty() {
+        return password;
     }
 }

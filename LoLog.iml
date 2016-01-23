@@ -14,6 +14,5 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER" level="application" />
   </component>
 </module>
