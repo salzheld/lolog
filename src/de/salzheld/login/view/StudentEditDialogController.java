@@ -16,6 +16,8 @@ public class StudentEditDialogController {
     private TextField lastNameField;
     @FXML
     private TextField courseField;
+    @FXML
+    private TextField passwordField;
 
     private Stage dialogStage;
     private Student person;
@@ -49,6 +51,7 @@ public class StudentEditDialogController {
         firstNameField.setText(person.getFirstName());
         lastNameField.setText(person.getLastName());
         courseField.setText(person.getCourse());
+        passwordField.setText(person.getPassword());
     }
 
     /**
@@ -69,6 +72,12 @@ public class StudentEditDialogController {
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
             person.setCourse(courseField.getText());
+            if (passwordField.getText() == null) {
+                person.setPassword("Realschule");
+            }
+            else {
+                person.setPassword(passwordField.getText());
+            }
 
             okClicked = true;
             dialogStage.close();
@@ -97,8 +106,8 @@ public class StudentEditDialogController {
         if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
             errorMessage += "Kein gültiger Nachname!\n";
         }
-        if (courseField.getText() == null || courseField.getText().length() == 0) {
-            errorMessage += "Keine gültige Klasse!\n";
+        if (passwordField.getText() != null && passwordField.getText().length() < 8) {
+            errorMessage += "Kein gültiges Passwort!\n";
         }
 
         if (errorMessage.length() == 0) {

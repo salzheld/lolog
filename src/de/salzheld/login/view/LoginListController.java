@@ -2,6 +2,7 @@ package de.salzheld.login.view;
 
 import de.salzheld.login.MainApp;
 import de.salzheld.login.model.Student;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
@@ -13,10 +14,16 @@ import javafx.scene.control.TableView;
 public class LoginListController {
     @FXML
     private TableView<Student> personTable;
+//    @FXML
+//    private TableColumn<Student, String> firstNameColumn;
+//    @FXML
+//    private TableColumn<Student, String> lastNameColumn;
     @FXML
-    private TableColumn<Student, String> firstNameColumn;
+    private TableColumn<Student, String> courseColumn;
     @FXML
-    private TableColumn<Student, String> lastNameColumn;
+    private TableColumn<Student, String> nameColumn;
+    @FXML
+    private TableColumn<Student, String> passwordColumn;
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -35,8 +42,12 @@ public class LoginListController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+//        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+//        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+
+        courseColumn.setCellValueFactory(cellData -> cellData.getValue().courseProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
     }
 
     /**

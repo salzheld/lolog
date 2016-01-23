@@ -1,5 +1,6 @@
 package de.salzheld.login.model;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +12,7 @@ import javafx.beans.property.StringProperty;
 public class Student {
     private final StringProperty firstName;
     private final StringProperty lastName;
+    private final StringProperty name;
     private final StringProperty course;
     private final IntegerProperty grade;
 
@@ -35,6 +37,8 @@ public class Student {
     public Student(String firstName, String lastName, String course, String password) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
+        this.name = new SimpleStringProperty();
+        this.name.bind(Bindings.concat(this.firstName, "  ", this.lastName));
         this.course = new SimpleStringProperty(course);
         this.password = new SimpleStringProperty(password);
         grade = new SimpleIntegerProperty(5);
@@ -63,6 +67,10 @@ public class Student {
 
     public StringProperty lastNameProperty() {
         return lastName;
+    }
+
+    public StringProperty nameProperty() {
+        return name;
     }
 
     public int getGrade() {
