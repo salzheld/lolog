@@ -26,7 +26,7 @@ public class Student {
      * Default constructor.
      */
     public Student() {
-        this("", "", null, null);
+        this(null, null, null, null);
     }
 
     /**
@@ -46,13 +46,16 @@ public class Student {
         this.password = new SimpleStringProperty(password);
         grade = new SimpleIntegerProperty(5);
         login = new SimpleStringProperty(null);
+        buildLogin();
     }
 
     /**
-     * Erzeugt den LoNet²-Login
+     * Build the LoNet²-Login
      **/
     public void buildLogin() {
-        login.set( Tools.sanitizeName(lastName.getValue()) + "-" + Tools.sanitizeName(firstName.getValue()) );
+        if(firstName.getValue() != null) {
+            login.set( Tools.sanitizeName(lastName.getValue()) + "-" + Tools.sanitizeName(firstName.getValue()) );
+        }
     }
 
     public String getFirstName() {
