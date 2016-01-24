@@ -3,13 +3,17 @@ package de.salzheld.login.view;
 import de.salzheld.login.MainApp;
 import de.salzheld.login.model.LoginModel;
 import de.salzheld.login.model.Student;
+import javafx.beans.Observable;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -125,5 +129,26 @@ public class LoginListController {
 
             alert.showAndWait();
         }
+    }
+
+    /**
+     * Called when the user clicks the new button. Opens a dialog to edit
+     * details for a new person.
+     */
+    @FXML
+    private void handleCopyClipboard() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        String clip = new String();
+
+        ObservableList<Student> list = mainApp.getStudentsData();
+        for (Student student : list) {
+            clip += student.getLogin() + " ";
+            clip += student.getPassword() + " ";
+            clip += student.getFirstName() + " ";
+            clip += student.getLastName() + "\n";
+        }
+        content.putString(clip);
+        clipboard.setContent(content);
     }
 }
