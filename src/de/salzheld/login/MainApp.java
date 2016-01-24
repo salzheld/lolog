@@ -1,7 +1,15 @@
 package de.salzheld.login;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.sun.corba.se.impl.util.Version;
+import de.salzheld.login.helper.ConnectMySQL;
 import de.salzheld.login.model.Student;
 import de.salzheld.login.view.LoginListController;
 import de.salzheld.login.view.StudentEditDialogController;
@@ -38,10 +46,45 @@ public class MainApp extends Application {
     }
 
     private void initStudents() {
-        // Add some sample data
-        studentsData.add(new Student("Hans", "Muster", "5a", "Realschule"));
-        studentsData.add(new Student("Peter", "Müller", "5a", "Realschule"));
-        studentsData.add(new Student("Bärbel", "Schäfer", "5b", "Realschule"));
+        String statement =
+                "SELECT" +
+                        " g.Bezeichnung,p.Nachname,p.Rufname,p.Geschlecht from person p" +
+                        " inner join jahrgangsdaten j on p.Id=j.SchuelerId" +
+                        " inner join gruppe g on j.GruppeId=g.Id where" +
+                        " j.Status='0' and g.Bezeichnung='5a' or " +
+                        " j.Status='0' and g.Bezeichnung='5b' or " +
+                        " j.Status='0' and g.Bezeichnung='5c' or " +
+                        " j.Status='0' and g.Bezeichnung='5d' or " +
+                        " j.Status='0' and g.Bezeichnung='5e' " +
+                        " order by g.Bezeichnung, p.Geschlecht, p.Nachname;";
+
+        Connection connection = ConnectMySQL.ConnectDatabase("localhost", "3306", "Danis61128", "root", "tischTuch");
+        if (connection == null) {
+            System.out.println("no connection");
+        }
+
+        try {
+            PreparedStatement pst = connection.prepareStatement( statement );
+            ResultSet rs = pst.executeQuery();
+
+            // add Students from Database
+            while( rs.next() ) {
+                studentsData.add(
+                        new Student(
+                                rs.getString(3),
+                                rs.getString(2),
+                                rs.getString(1),
+                                "Realschule"
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Logger lgr = Logger.getLogger(Version.class.getName());
+            lgr.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     /**

@@ -1,4 +1,4 @@
-package de.salzheld.login;
+package de.salzheld.login.helper;
 
 /**
  * Created by Joern on 23.01.2016.

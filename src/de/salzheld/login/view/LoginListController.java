@@ -1,12 +1,18 @@
 package de.salzheld.login.view;
 
 import de.salzheld.login.MainApp;
+import de.salzheld.login.model.LoginModel;
 import de.salzheld.login.model.Student;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by jkretzschmar on 22.01.2016.
@@ -14,27 +20,27 @@ import javafx.scene.control.TableView;
 public class LoginListController {
     @FXML
     private TableView<Student> personTable;
-//    @FXML
-//    private TableColumn<Student, String> firstNameColumn;
-//    @FXML
-//    private TableColumn<Student, String> lastNameColumn;
     @FXML
     private TableColumn<Student, String> courseColumn;
-    @FXML
-    private TableColumn<Student, String> loginColumn;
     @FXML
     private TableColumn<Student, String> nameColumn;
     @FXML
     private TableColumn<Student, String> passwordColumn;
+    @FXML
+    private Label databaseConnection;
 
     // Reference to the main application.
     private MainApp mainApp;
+
+    // Reference to the LoginModel
+    public LoginModel loginModel;
 
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
      */
     public LoginListController() {
+        loginModel = new LoginModel();
     }
 
     /**
@@ -43,13 +49,8 @@ public class LoginListController {
      */
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
-//        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-//        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-
         courseColumn.setCellValueFactory(cellData -> cellData.getValue().courseProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        loginColumn.setCellValueFactory(cellData -> cellData.getValue().loginProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
     }
 

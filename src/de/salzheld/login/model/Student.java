@@ -1,13 +1,11 @@
 package de.salzheld.login.model;
 
-import de.salzheld.login.Tools;
+import de.salzheld.login.helper.Tools;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import javax.tools.Tool;
 
 /**
  * Created by Joern on 18.01.2016.
