@@ -25,6 +25,8 @@ public class LoginListController {
     @FXML
     private TableColumn<Student, String> nameColumn;
     @FXML
+    private TableColumn<Student, String> loginColumn;
+    @FXML
     private TableColumn<Student, String> passwordColumn;
     @FXML
     private Label databaseConnection;
@@ -50,6 +52,7 @@ public class LoginListController {
     @FXML
     private void initialize() {
         courseColumn.setCellValueFactory(cellData -> cellData.getValue().courseProperty());
+        loginColumn.setCellValueFactory(cellData -> cellData.getValue().loginProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
     }
