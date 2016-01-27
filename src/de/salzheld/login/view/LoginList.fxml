@@ -11,11 +11,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.salzheld.login.view.LoginListController">
+<AnchorPane prefHeight="440.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.salzheld.login.view.LoginListController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <TableView fx:id="personTable" BorderPane.alignment="CENTER">
+            <placeholder>
+                <Label text="Bitte wählen Sie eine Klasse oder erstellen Sie einen Login!" />
+            </placeholder>
               <columns>
                 <TableColumn fx:id="courseColumn" prefWidth="75.0" text="Klasse" />
                 <TableColumn fx:id="loginColumn" prefWidth="75.0" text="Login" />
@@ -30,9 +33,9 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <buttons>
-                  <Button mnemonicParsing="false" onAction="#handleCopyClipboard" text="Copy" />
-                <Button mnemonicParsing="false" onAction="#handleNewPerson" text="Neu" />
-                  <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="Löschen" />
+                  <ComboBox fx:id="selectCourseBox" onAction="#handleCourseSelect" prefWidth="150.0" />
+                <Button mnemonicParsing="false" onAction="#handleNewPerson" text="neuer Login" />
+                  <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="löschen" />
                </buttons>
                <BorderPane.margin>
                   <Insets right="10.0" />

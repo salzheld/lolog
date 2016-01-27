@@ -36,8 +36,6 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        initStudents();
-
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("LoNet² - Login-Erzeuger (c) 2016 - Kretzschmar");
 
@@ -45,18 +43,7 @@ public class MainApp extends Application {
         showLoginList();
     }
 
-    private void initStudents() {
-        String statement =
-                "SELECT" +
-                        " g.Bezeichnung,p.Nachname,p.Rufname,p.Geschlecht from person p" +
-                        " inner join jahrgangsdaten j on p.Id=j.SchuelerId" +
-                        " inner join gruppe g on j.GruppeId=g.Id where" +
-                        " j.Status='0' and g.Bezeichnung='5a' or " +
-                        " j.Status='0' and g.Bezeichnung='5b' or " +
-                        " j.Status='0' and g.Bezeichnung='5c' or " +
-                        " j.Status='0' and g.Bezeichnung='5d' or " +
-                        " j.Status='0' and g.Bezeichnung='5e' " +
-                        " order by g.Bezeichnung, p.Geschlecht, p.Nachname;";
+    private void initStudents(String statement) {
 
         Connection connection = ConnectMySQL.ConnectDatabase("localhost", "3306", "Danis61128", "root", "tischTuch");
         if (connection == null) {
@@ -92,6 +79,23 @@ public class MainApp extends Application {
      * @return
      */
     public ObservableList<Student> getStudentsData() {
+        return studentsData;
+    }
+
+    /**
+     * Returns the data as an observable list of Students.
+     * @return
+     */
+    public ObservableList<Student> getCourse(String course) {
+        studentsData.removeAll();
+        String statement2 =
+                "SELECT" +
+                        " g.Bezeichnung,p.Nachname,p.Rufname,p.Geschlecht from person p" +
+                        " inner join jahrgangsdaten j on p.Id=j.SchuelerId" +
+                        " inner join gruppe g on j.GruppeId=g.Id where" +
+                        " j.Status='0' and g.Bezeichnung='" + course +"'" +
+                        " order by g.Bezeichnung, p.Geschlecht, p.Nachname;";
+        initStudents(statement2);
         return studentsData;
     }
 

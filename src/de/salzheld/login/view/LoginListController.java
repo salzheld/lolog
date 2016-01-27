@@ -3,25 +3,21 @@ package de.salzheld.login.view;
 import de.salzheld.login.MainApp;
 import de.salzheld.login.model.LoginModel;
 import de.salzheld.login.model.Student;
-import javafx.beans.Observable;
-import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by jkretzschmar on 22.01.2016.
  */
 public class LoginListController {
+    ObservableList<String> courseList = FXCollections.observableArrayList(
+            "keine Klasse", "5a", "5b", "5c"
+    );
+
     @FXML
     private TableView<Student> personTable;
     @FXML
@@ -33,7 +29,7 @@ public class LoginListController {
     @FXML
     private TableColumn<Student, String> passwordColumn;
     @FXML
-    private Label databaseConnection;
+    private ComboBox selectCourseBox;
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -55,6 +51,9 @@ public class LoginListController {
      */
     @FXML
     private void initialize() {
+        selectCourseBox.setValue("keine Klasse");
+        selectCourseBox.setItems(courseList);
+
         courseColumn.setCellValueFactory(cellData -> cellData.getValue().courseProperty());
         loginColumn.setCellValueFactory(cellData -> cellData.getValue().loginProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -81,6 +80,7 @@ public class LoginListController {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             personTable.getItems().remove(selectedIndex);
+            copyClipboard();
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -103,40 +103,22 @@ public class LoginListController {
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
             mainApp.getStudentsData().add(tempPerson);
+            copyClipboard();
         }
     }
 
-     /**
-     * Called when the user clicks the edit button. Opens a dialog to edit
-     * details for the selected person.
-     */
     @FXML
-    private void handleEditPerson() {
-        Student selectedPerson = personTable.getSelectionModel().getSelectedItem();
-        if (selectedPerson != null) {
-            boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
-            if (okClicked) {
-                //showStudentDetails(selectedPerson);
-            }
-
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
-
-            alert.showAndWait();
-        }
+    private void handleCourseSelect() {
+        personTable.getItems().clear();
+        //String test = selectCourseBox.getSelectionModel().getSelectedItem().toString();
+        mainApp.getCourse(selectCourseBox.getSelectionModel().getSelectedItem().toString());
+        copyClipboard();
     }
 
     /**
-     * Called when the user clicks the new button. Opens a dialog to edit
-     * details for a new person.
+     * copy all logins to the clipboard
      */
-    @FXML
-    private void handleCopyClipboard() {
+    private void copyClipboard() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         String clip = new String();
@@ -151,4 +133,5 @@ public class LoginListController {
         content.putString(clip);
         clipboard.setContent(content);
     }
+
 }
