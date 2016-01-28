@@ -9,18 +9,19 @@ import javafx.stage.Stage;
 /**
  * Created by jkretzschmar on 22.01.2016.
  */
-public class StudentEditDialogController {
+public class PreferencesDialogController {
     @FXML
-    private TextField firstNameField;
+    private TextField sqlHostField;
     @FXML
-    private TextField lastNameField;
+    private TextField sqlDatabaseField;
     @FXML
-    private TextField courseField;
+    private TextField sqlUserField;
     @FXML
-    private TextField passwordField;
+    private TextField sqlUserPasswordField;
+    @FXML
+    private TextField lonetPasswordField;
 
     private Stage dialogStage;
-    private Student person;
     private boolean okClicked = false;
 
     /**
@@ -41,20 +42,6 @@ public class StudentEditDialogController {
     }
 
     /**
-     * Sets the person to be edited in the dialog.
-     *
-     * @param person
-     */
-    public void setPerson(Student person) {
-        this.person = person;
-
-        firstNameField.setText(person.getFirstName());
-        lastNameField.setText(person.getLastName());
-        courseField.setText(person.getCourse());
-        passwordField.setText(person.getPassword());
-    }
-
-    /**
      * Returns true if the user clicked OK, false otherwise.
      *
      * @return
@@ -69,16 +56,6 @@ public class StudentEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            person.setFirstName(firstNameField.getText());
-            person.setLastName(lastNameField.getText());
-            person.setCourse(courseField.getText());
-            if (passwordField.getText() == null) {
-                person.setPassword("Realschule");
-            }
-            else {
-                person.setPassword(passwordField.getText());
-            }
-            person.buildLogin();
 
             okClicked = true;
             dialogStage.close();
@@ -101,15 +78,15 @@ public class StudentEditDialogController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
-            errorMessage += "Kein gültiger Vorname!\n";
-        }
-        if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
-            errorMessage += "Kein gültiger Nachname!\n";
-        }
-        if (passwordField.getText() != null && passwordField.getText().length() < 8) {
-            errorMessage += "Kein gültiges Passwort!\n";
-        }
+//        if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
+//            errorMessage += "Kein gültiger Vorname!\n";
+//        }
+//        if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
+//            errorMessage += "Kein gültiger Nachname!\n";
+//        }
+//        if (passwordField.getText() != null && passwordField.getText().length() < 8) {
+//            errorMessage += "Kein gültiges Passwort!\n";
+//        }
 
         if (errorMessage.length() == 0) {
             return true;

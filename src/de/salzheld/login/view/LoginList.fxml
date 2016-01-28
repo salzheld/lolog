@@ -20,10 +20,10 @@
                 <Label text="Bitte wählen Sie eine Klasse oder erstellen Sie einen Login!" />
             </placeholder>
               <columns>
-                <TableColumn fx:id="courseColumn" prefWidth="75.0" text="Klasse" />
-                <TableColumn fx:id="loginColumn" prefWidth="75.0" text="Login" />
-                  <TableColumn fx:id="passwordColumn" prefWidth="75.0" text="Passwort" />
-                  <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="courseColumn" prefWidth="50.0" text="Klasse" />
+                  <TableColumn fx:id="nameColumn" text="Name" />
+                <TableColumn fx:id="loginColumn" text="Login" />
+                  <TableColumn fx:id="passwordColumn" text="Passwort" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -31,16 +31,29 @@
             </TableView>
          </center>
          <bottom>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <buttons>
-                  <ComboBox fx:id="selectCourseBox" onAction="#handleCourseSelect" prefWidth="150.0" />
-                <Button mnemonicParsing="false" onAction="#handleNewPerson" text="neuer Login" />
-                  <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="löschen" />
-               </buttons>
+            <VBox BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <ButtonBar>
+                    <buttons>
+                        <TextField fx:id="firstNameField" promptText="Vorname" />
+                        <TextField fx:id="lastNameField" promptText="Nachname" />
+                      <Button mnemonicParsing="false" onAction="#handleNewPerson" text="Login erzeugen" />
+                    </buttons>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </ButtonBar>
+                  <ButtonBar>
+                     <buttons>
+                        <ComboBox fx:id="selectCourseBox" onAction="#handleCourseSelect" prefWidth="100.0" />
+                        <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="löschen" />
+                     </buttons>
+                  </ButtonBar>
+               </children>
                <BorderPane.margin>
-                  <Insets right="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
-            </ButtonBar>
+            </VBox>
          </bottom>
       </BorderPane>
    </children>

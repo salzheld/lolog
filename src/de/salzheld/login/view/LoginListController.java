@@ -30,6 +30,12 @@ public class LoginListController {
     private TableColumn<Student, String> passwordColumn;
     @FXML
     private ComboBox selectCourseBox;
+    @FXML
+    private Button addLoginButton;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -99,11 +105,48 @@ public class LoginListController {
      */
     @FXML
     private void handleNewPerson() {
-        Student tempPerson = new Student();
-        boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
-        if (okClicked) {
-            mainApp.getStudentsData().add(tempPerson);
+        Student person = new Student();
+
+        if (isInputValid()) {
+            person.setFirstName(firstNameField.getText());
+            person.setLastName(lastNameField.getText());
+            person.setPassword("Realschule");
+            person.buildLogin();
+            firstNameField.clear();
+            lastNameField.clear();
+            mainApp.getStudentsData().add(person);
             copyClipboard();
+        }
+    }
+
+    /**
+     * Validates the user input in the text fields.
+     *
+     * @return true if the input is valid
+     */
+    private boolean isInputValid() {
+        String errorMessage = "";
+
+        String test = firstNameField.getText();
+        if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
+            errorMessage += "Kein gültiger Vorname!\n";
+        }
+        if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
+            errorMessage += "Kein gültiger Nachname!\n";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Ungültige Felder");
+            alert.setHeaderText("Bitte tragen Sie die Daten korrekt ein!");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+
+            return false;
         }
     }
 

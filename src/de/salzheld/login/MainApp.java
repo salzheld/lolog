@@ -12,7 +12,7 @@ import com.sun.corba.se.impl.util.Version;
 import de.salzheld.login.helper.ConnectMySQL;
 import de.salzheld.login.model.Student;
 import de.salzheld.login.view.LoginListController;
-import de.salzheld.login.view.StudentEditDialogController;
+import de.salzheld.login.view.PreferencesDialogController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +37,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("LoNet² - Login-Erzeuger (c) 2016 - Kretzschmar");
+        this.primaryStage.setTitle("LoLog - LoNet-Login-Helfer (c) 2016 - Kretzschmar");
 
         initRootLayout();
         showLoginList();
@@ -164,7 +164,7 @@ public class MainApp extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("view/StudentEditDialog.fxml"));
+            loader.setLocation(getClass().getResource("view/PreferencesDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             // Create the dialog Stage.
@@ -176,9 +176,9 @@ public class MainApp extends Application {
             dialogStage.setScene(scene);
 
             // Set the person into the controller.
-            StudentEditDialogController controller = loader.getController();
+            PreferencesDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setPerson(person);
+            //controller.setPerson(person);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
