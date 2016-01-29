@@ -9,18 +9,18 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Datei">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleNew" text="Neu" />
                   <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Öffnen" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Speichern" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Speichern unter ..." />
-              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Beenden" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Hilfe">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Über LoLog" />
             </items>
           </Menu>
         </menus>

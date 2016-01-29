@@ -1,20 +1,12 @@
 package de.salzheld.login.view;
 
 import java.io.File;
-import java.io.IOException;
 
 import de.salzheld.login.MainApp;
-import de.salzheld.login.model.Student;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import sun.plugin.javascript.navig.Anchor;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -111,8 +103,9 @@ public class RootLayoutController {
     private void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("LoLog");
-        alert.setHeaderText("Über");
+        alert.setHeaderText("LoLog - Der LoNet²-Login-Helfer");
         alert.setContentText("Autor: Jörn Kretzschmar\nWebseite: http://salzheld.de");
+        alert.setAlertType(AlertType.INFORMATION);
 
         alert.showAndWait();
     }

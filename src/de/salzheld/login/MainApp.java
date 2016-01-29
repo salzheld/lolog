@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import com.sun.corba.se.impl.util.Version;
-import de.salzheld.login.helper.ConnectMySQL;
+import de.salzheld.login.model.LoginModel;
 import de.salzheld.login.model.Student;
 import de.salzheld.login.model.StudentListWrapper;
 import de.salzheld.login.view.LoginListController;
@@ -24,7 +24,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.xml.bind.JAXBContext;
@@ -54,13 +53,8 @@ public class MainApp extends Application {
     }
 
     private void connectSql() {
-        connection = ConnectMySQL.ConnectDatabase("192.168.115.100", "3306", "Danis61128", "root", "loroliee");
-        if (connection == null) {
-            connection = ConnectMySQL.ConnectDatabase("localhost", "3306", "Danis61128", "root", "tischTuch");
-        }
-        if (connection == null) {
-            System.out.println("no connection");
-        }
+        LoginModel loginModel = new LoginModel();
+        connection = loginModel.getConnection();
     }
 
     private void initStudents(String statement) {
@@ -202,9 +196,9 @@ public class MainApp extends Application {
 
         } catch (Exception e) { // catches ANY exception
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not load data");
-            alert.setContentText("Could not load data from file:\n" + file.getPath());
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Kann Daten nicht lesen!");
+            alert.setContentText("Kann Daten in Datei nicht lesen:\n" + file.getPath());
 
             alert.showAndWait();
         }
@@ -233,9 +227,9 @@ public class MainApp extends Application {
             setStudentsFilePath(file);
         } catch (Exception e) { // catches ANY exception
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not save data");
-            alert.setContentText("Could not save data to file:\n" + file.getPath());
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Kann Daten nicht speichern!");
+            alert.setContentText("Kann Daten nicht in Datei speichern:\n" + file.getPath());
 
             alert.showAndWait();
         }

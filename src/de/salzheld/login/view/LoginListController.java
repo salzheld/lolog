@@ -144,7 +144,6 @@ public class LoginListController {
     @FXML
     private void handleCourseSelect() {
         personTable.getItems().clear();
-        //String test = selectCourseBox.getSelectionModel().getSelectedItem().toString();
         mainApp.getCourse(selectCourseBox.getSelectionModel().getSelectedItem().toString());
         copyClipboard();
     }
