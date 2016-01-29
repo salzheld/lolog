@@ -11,16 +11,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.salzheld.login.view.LoginListController">
+<AnchorPane prefHeight="440.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.salzheld.login.view.LoginListController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <TableView fx:id="personTable" BorderPane.alignment="CENTER">
+            <placeholder>
+                <Label text="Bitte wählen Sie eine Klasse oder erstellen Sie einen Login!" />
+            </placeholder>
               <columns>
-                <TableColumn fx:id="courseColumn" prefWidth="75.0" text="Klasse" />
-                <TableColumn fx:id="loginColumn" prefWidth="75.0" text="Login" />
-                  <TableColumn fx:id="passwordColumn" prefWidth="75.0" text="Passwort" />
-                  <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="courseColumn" prefWidth="50.0" text="Klasse" />
+                  <TableColumn fx:id="nameColumn" text="Name" />
+                <TableColumn fx:id="loginColumn" text="Login" />
+                  <TableColumn fx:id="passwordColumn" text="Passwort" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -28,16 +31,29 @@
             </TableView>
          </center>
          <bottom>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <buttons>
-                  <Button mnemonicParsing="false" onAction="#handleCopyClipboard" text="Copy" />
-                <Button mnemonicParsing="false" onAction="#handleNewPerson" text="Neu" />
-                  <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="Löschen" />
-               </buttons>
+            <VBox BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <ButtonBar buttonMinWidth="150.0">
+                    <buttons>
+                        <TextField fx:id="firstNameField" promptText="Vorname" />
+                        <TextField fx:id="lastNameField" promptText="Nachname" />
+                      <Button mnemonicParsing="false" onAction="#handleNewPerson" text="Login erzeugen" />
+                    </buttons>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </ButtonBar>
+                  <ButtonBar buttonMinWidth="150.0">
+                     <buttons>
+                        <ComboBox fx:id="selectCourseBox" onAction="#handleCourseSelect" />
+                        <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="löschen" />
+                     </buttons>
+                  </ButtonBar>
+               </children>
                <BorderPane.margin>
-                  <Insets right="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
-            </ButtonBar>
+            </VBox>
          </bottom>
       </BorderPane>
    </children>
