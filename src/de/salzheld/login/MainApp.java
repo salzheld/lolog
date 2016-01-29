@@ -1,5 +1,6 @@
 package de.salzheld.login;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,26 +8,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import com.sun.corba.se.impl.util.Version;
 import de.salzheld.login.helper.ConnectMySQL;
 import de.salzheld.login.model.Student;
+import de.salzheld.login.model.StudentListWrapper;
 import de.salzheld.login.view.LoginListController;
-import de.salzheld.login.view.PreferencesDialogController;
+import de.salzheld.login.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private Connection connection;
 
     /**
      * The data as an observable list of Persons.
@@ -40,15 +49,21 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("LoLog - LoNet-Login-Helfer (c) 2016 - Kretzschmar");
 
         initRootLayout();
+        connectSql();
         showLoginList();
     }
 
-    private void initStudents(String statement) {
-
-        Connection connection = ConnectMySQL.ConnectDatabase("localhost", "3306", "Danis61128", "root", "tischTuch");
+    private void connectSql() {
+        connection = ConnectMySQL.ConnectDatabase("192.168.115.100", "3306", "Danis61128", "root", "loroliee");
+        if (connection == null) {
+            connection = ConnectMySQL.ConnectDatabase("localhost", "3306", "Danis61128", "root", "tischTuch");
+        }
         if (connection == null) {
             System.out.println("no connection");
         }
+    }
+
+    private void initStudents(String statement) {
 
         try {
             PreparedStatement pst = connection.prepareStatement( statement );
@@ -61,12 +76,9 @@ public class MainApp extends Application {
                                 rs.getString(3),
                                 rs.getString(2),
                                 rs.getString(1),
-                                "Realschule"
-                        )
+                                "Realschule")
                 );
             }
-            connection.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
             Logger lgr = Logger.getLogger(Version.class.getName());
@@ -112,9 +124,120 @@ public class MainApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+
+            // Give the controller access to the main app.
+            RootLayoutController controller = loader.getController();
+            controller.setMainApp(this);
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        // Try to load last opened person file.
+        File file = getStudentsFilePath();
+        if (file != null) {
+            loadStudentDataFromFile(file);
+        }
+    }
+
+    /**
+     * Returns the person file preference, i.e. the file that was last opened.
+     * The preference is read from the OS specific registry. If no such
+     * preference can be found, null is returned.
+     *
+     * @return
+     */
+    public File getStudentsFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Sets the file path of the currently loaded file. The path is persisted in
+     * the OS specific registry.
+     *
+     * @param file the file or null to remove the path
+     */
+    public void setStudentsFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+
+            // Update the stage title.
+            primaryStage.setTitle("LoLog - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+
+            // Update the stage title.
+            primaryStage.setTitle("LoLog");
+        }
+    }
+
+    /**
+     * Loads person data from the specified file. The current person data will
+     * be replaced.
+     *
+     * @param file
+     */
+    public void loadStudentDataFromFile(File file) {
+        try {
+            JAXBContext context = JAXBContext
+                    .newInstance(StudentListWrapper.class);
+            Unmarshaller um = context.createUnmarshaller();
+
+            // Reading XML from the file and unmarshalling.
+            StudentListWrapper wrapper = (StudentListWrapper) um.unmarshal(file);
+
+            studentsData.clear();
+            studentsData.addAll(wrapper.getStudents());
+
+            // Save the file path to the registry.
+            setStudentsFilePath(file);
+
+        } catch (Exception e) { // catches ANY exception
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not load data");
+            alert.setContentText("Could not load data from file:\n" + file.getPath());
+
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     * Saves the current person data to the specified file.
+     *
+     * @param file
+     */
+    public void saveStudentDataToFile(File file) {
+        try {
+            JAXBContext context = JAXBContext
+                    .newInstance(StudentListWrapper.class);
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            // Wrapping our person data.
+            StudentListWrapper wrapper = new StudentListWrapper();
+            wrapper.setStudents(studentsData);
+
+            // Marshalling and saving XML to the file.
+            m.marshal(wrapper, file);
+
+            // Save the file path to the registry.
+            setStudentsFilePath(file);
+        } catch (Exception e) { // catches ANY exception
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not save data");
+            alert.setContentText("Could not save data to file:\n" + file.getPath());
+
+            alert.showAndWait();
         }
     }
 
@@ -150,43 +273,5 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    /**
-     * Opens a dialog to edit details for the specified person. If the user
-     * clicks OK, the changes are saved into the provided person object and true
-     * is returned.
-     *
-     * @param person the person object to be edited
-     * @return true if the user clicked OK, false otherwise.
-     */
-    public boolean showPersonEditDialog(Student person) {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("view/PreferencesDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the person into the controller.
-            PreferencesDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            //controller.setPerson(person);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }

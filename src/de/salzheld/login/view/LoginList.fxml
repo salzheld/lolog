@@ -33,7 +33,7 @@
          <bottom>
             <VBox BorderPane.alignment="TOP_LEFT">
                <children>
-                  <ButtonBar>
+                  <ButtonBar buttonMinWidth="150.0">
                     <buttons>
                         <TextField fx:id="firstNameField" promptText="Vorname" />
                         <TextField fx:id="lastNameField" promptText="Nachname" />
@@ -43,9 +43,9 @@
                         <Insets bottom="10.0" />
                      </padding>
                   </ButtonBar>
-                  <ButtonBar>
+                  <ButtonBar buttonMinWidth="150.0">
                      <buttons>
-                        <ComboBox fx:id="selectCourseBox" onAction="#handleCourseSelect" prefWidth="100.0" />
+                        <ComboBox fx:id="selectCourseBox" onAction="#handleCourseSelect" />
                         <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="löschen" />
                      </buttons>
                   </ButtonBar>

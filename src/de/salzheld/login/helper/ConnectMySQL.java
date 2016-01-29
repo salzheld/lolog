@@ -1,16 +1,8 @@
 package de.salzheld.login.helper;
 
 import com.mysql.jdbc.Connection;
-import com.sun.corba.se.impl.util.Version;
-import de.salzheld.login.model.Student;
 
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

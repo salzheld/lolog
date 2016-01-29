@@ -1,7 +1,6 @@
 package de.salzheld.login.view;
 
 import de.salzheld.login.MainApp;
-import de.salzheld.login.model.LoginModel;
 import de.salzheld.login.model.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +14,7 @@ import javafx.scene.input.ClipboardContent;
  */
 public class LoginListController {
     ObservableList<String> courseList = FXCollections.observableArrayList(
-            "keine Klasse", "5a", "5b", "5c"
+            "5a", "5b", "5c"
     );
 
     @FXML
@@ -31,8 +30,6 @@ public class LoginListController {
     @FXML
     private ComboBox selectCourseBox;
     @FXML
-    private Button addLoginButton;
-    @FXML
     private TextField firstNameField;
     @FXML
     private TextField lastNameField;
@@ -40,15 +37,11 @@ public class LoginListController {
     // Reference to the main application.
     private MainApp mainApp;
 
-    // Reference to the LoginModel
-    public LoginModel loginModel;
-
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
      */
     public LoginListController() {
-        loginModel = new LoginModel();
     }
 
     /**
@@ -57,7 +50,6 @@ public class LoginListController {
      */
     @FXML
     private void initialize() {
-        selectCourseBox.setValue("keine Klasse");
         selectCourseBox.setItems(courseList);
 
         courseColumn.setCellValueFactory(cellData -> cellData.getValue().courseProperty());
@@ -126,8 +118,7 @@ public class LoginListController {
      */
     private boolean isInputValid() {
         String errorMessage = "";
-
-        String test = firstNameField.getText();
+        
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
             errorMessage += "Kein gültiger Vorname!\n";
         }
