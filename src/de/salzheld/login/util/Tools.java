@@ -1,17 +1,9 @@
-package de.salzheld.login.helper;
+package de.salzheld.login.util;
 
 /**
  * Created by Joern on 23.01.2016.
  */
 public final class Tools {
-
-
-    /**
-     * Erzeugt den LoNet²-Login
-     **/
-    public static String buildLogin(String firstName, String lastName) {
-        return sanitizeName(lastName) + "-" + sanitizeName(firstName);
-    }
 
     /**
      * Bereinigt den als Parameter übergebenen String.

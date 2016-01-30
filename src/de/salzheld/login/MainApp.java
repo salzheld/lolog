@@ -12,8 +12,8 @@ import java.util.prefs.Preferences;
 
 import com.sun.corba.se.impl.util.Version;
 import de.salzheld.login.model.LoginModel;
-import de.salzheld.login.model.Student;
-import de.salzheld.login.model.StudentListWrapper;
+import de.salzheld.login.model.Person;
+import de.salzheld.login.model.PersonListWrapper;
 import de.salzheld.login.view.LoginListController;
 import de.salzheld.login.view.RootLayoutController;
 import javafx.application.Application;
@@ -39,7 +39,7 @@ public class MainApp extends Application {
     /**
      * The data as an observable list of Persons.
      */
-    private ObservableList<Student> studentsData = FXCollections.observableArrayList();
+    private ObservableList<Person> studentsData = FXCollections.observableArrayList();
 
     @Override
     public void start(Stage primaryStage) {
@@ -66,7 +66,7 @@ public class MainApp extends Application {
             // add Students from Database
             while( rs.next() ) {
                 studentsData.add(
-                        new Student(
+                        new Person(
                                 rs.getString(3),
                                 rs.getString(2),
                                 rs.getString(1),
@@ -84,7 +84,7 @@ public class MainApp extends Application {
      * Returns the data as an observable list of Students.
      * @return
      */
-    public ObservableList<Student> getStudentsData() {
+    public ObservableList<Person> getStudentsData() {
         return studentsData;
     }
 
@@ -92,7 +92,7 @@ public class MainApp extends Application {
      * Returns the data as an observable list of Students.
      * @return
      */
-    public ObservableList<Student> getCourse(String course) {
+    public ObservableList<Person> getCourse(String course) {
         studentsData.removeAll();
         String statement2 =
                 "SELECT" +
@@ -182,14 +182,14 @@ public class MainApp extends Application {
     public void loadStudentDataFromFile(File file) {
         try {
             JAXBContext context = JAXBContext
-                    .newInstance(StudentListWrapper.class);
+                    .newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
 
             // Reading XML from the file and unmarshalling.
-            StudentListWrapper wrapper = (StudentListWrapper) um.unmarshal(file);
+            PersonListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
 
             studentsData.clear();
-            studentsData.addAll(wrapper.getStudents());
+            studentsData.addAll(wrapper.getPersons());
 
             // Save the file path to the registry.
             setStudentsFilePath(file);
@@ -212,13 +212,13 @@ public class MainApp extends Application {
     public void saveStudentDataToFile(File file) {
         try {
             JAXBContext context = JAXBContext
-                    .newInstance(StudentListWrapper.class);
+                    .newInstance(PersonListWrapper.class);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             // Wrapping our person data.
-            StudentListWrapper wrapper = new StudentListWrapper();
-            wrapper.setStudents(studentsData);
+            PersonListWrapper wrapper = new PersonListWrapper();
+            wrapper.setPersons(studentsData);
 
             // Marshalling and saving XML to the file.
             m.marshal(wrapper, file);

@@ -1,7 +1,7 @@
 package de.salzheld.login.view;
 
 import de.salzheld.login.MainApp;
-import de.salzheld.login.model.Student;
+import de.salzheld.login.model.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,15 +18,15 @@ public class LoginListController {
     );
 
     @FXML
-    private TableView<Student> personTable;
+    private TableView<Person> personTable;
     @FXML
-    private TableColumn<Student, String> courseColumn;
+    private TableColumn<Person, String> courseColumn;
     @FXML
-    private TableColumn<Student, String> nameColumn;
+    private TableColumn<Person, String> nameColumn;
     @FXML
-    private TableColumn<Student, String> loginColumn;
+    private TableColumn<Person, String> loginColumn;
     @FXML
-    private TableColumn<Student, String> passwordColumn;
+    private TableColumn<Person, String> passwordColumn;
     @FXML
     private ComboBox selectCourseBox;
     @FXML
@@ -84,7 +84,7 @@ public class LoginListController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Keine Auswahl");
-            alert.setHeaderText("Kein Student ausgewält");
+            alert.setHeaderText("Kein Person ausgewält");
             alert.setContentText("Bitte wählen Sie eine Person aus der Tabelle.");
 
             alert.showAndWait();
@@ -97,7 +97,7 @@ public class LoginListController {
      */
     @FXML
     private void handleNewPerson() {
-        Student person = new Student();
+        Person person = new Person();
 
         if (isInputValid()) {
             person.setFirstName(firstNameField.getText());
@@ -156,12 +156,12 @@ public class LoginListController {
         final ClipboardContent content = new ClipboardContent();
         String clip = new String();
 
-        ObservableList<Student> list = mainApp.getStudentsData();
-        for (Student student : list) {
-            clip += student.getLogin() + " ";
-            clip += student.getPassword() + " ";
-            clip += student.getFirstName() + " ";
-            clip += student.getLastName() + "\n";
+        ObservableList<Person> list = mainApp.getStudentsData();
+        for (Person person : list) {
+            clip += person.getLogin() + " ";
+            clip += person.getPassword() + " ";
+            clip += person.getFirstName() + " ";
+            clip += person.getLastName() + "\n";
         }
         content.putString(clip);
         clipboard.setContent(content);

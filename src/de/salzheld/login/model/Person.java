@@ -1,6 +1,6 @@
 package de.salzheld.login.model;
 
-import de.salzheld.login.helper.Tools;
+import de.salzheld.login.util.Tools;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Created by Joern on 18.01.2016.
  */
-public class Student {
+public class Person {
     private final StringProperty firstName;
     private final StringProperty lastName;
     private final StringProperty name;
@@ -23,7 +23,7 @@ public class Student {
     /**
      * Default constructor.
      */
-    public Student() {
+    public Person() {
         this(null, null, null, null);
     }
 
@@ -35,7 +35,7 @@ public class Student {
      * @param course
      * @param password
      */
-    public Student(String firstName, String lastName, String course, String password) {
+    public Person(String firstName, String lastName, String course, String password) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.name = new SimpleStringProperty();
